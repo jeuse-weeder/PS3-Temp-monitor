@@ -24,9 +24,16 @@ int main() {
     }
     else {
         std::cout << "Connected to your PS3" << std::endl;
+        ccapi.VshNotify(CCAPI::NotifyArrow, "Connected");
         int ret = ccapi.GetTemperature(&cell, &rsx);
-        if (ret != CCAPI_OK)
+        if (ret != CCAPI_OK) {
             std::cout << "Something went wrong";
+            exit(-1);
+        }
+        else {
+            
+        }
+            
     }
 
     
