@@ -5,15 +5,11 @@
 static CCAPI ccapi;
 
 
-int get_temps(std::string console_ip) {
-    
-    int rsx;
-    int cell;
-    ccapi.GetTemperature(&cell, &rsx);
-}
 
 int main() {
 
+    
+    int cell, rsx;
     std::string console_ip = "192.168.137.153"; // yeah it's hardcoded idc
     if (!ccapi.GetLibraryState())
     {
@@ -21,10 +17,19 @@ int main() {
         exit(-1);
     }
 
-    if (!ccapi.Connect(console_ip)) {
-        printf("Couldn't connect to your console...\n");
-        exit(-1);
+    if (ccapi.Connect(console_ip) != CCAPI_OK) 
+    {
+        std::cout << "Couldn't establish a connection with your PS3." << std::endl
+            << "Verify your ps3 ip." << std::endl;
     }
+    else {
+        std::cout << "Connected to your PS3" << std::endl;
+        int ret = ccapi.GetTemperature(&cell, &rsx);
+        if (ret != CCAPI_OK)
+            std::cout << "Something went wrong";
+    }
+
+    
 
 
 
